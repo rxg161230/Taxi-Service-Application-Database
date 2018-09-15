@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<script>
+function returnToMainPage()
+{	
+	window.location.replace("MainPage.html");
+}
+
+
+function searchBook(str)
+{
+  
+	key=document.getElementById(str).value;
+	var xmlhttp="";
+	if (window.XMLHttpRequest)
+	{  
+		xmlhttp=new XMLHttpRequest();
+	} 
+	else 
+	{
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); 
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("results").innerHTML=xmlhttp.responseText;   
+		}	  
+	}  
+   xmlhttp.open("GET","update.php?value="+key,true);  
+   xmlhttp.send();
+}
+
+
+function updateTime(serviceReq)
+{	
+
+	
+		var isCheckoutOk = "Do you like to update journey time for the service request = "+serviceReq+" ?";
+		var YesOrNo = confirm(isCheckoutOk);
+		if(YesOrNo == true)
+		{
+			var startTime = prompt("Please enter the start Time","00:00:00");
+						var endTime = prompt("Please enter the End Time","00:00:00");
+						
+						value = serviceReq+" " +startTime + " " + endTime;
+
+			var xmlhttp="";
+			if (window.XMLHttpRequest)
+			{  
+				xmlhttp=new XMLHttpRequest();
+			} 	
+			else 
+			{
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); 
+			}		
+			xmlhttp.onreadystatechange=function()
+			{
+				if (xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					document.getElementById("results").innerHTML=xmlhttp.responseText;   
+				}		  
+			}  
+			xmlhttp.open("GET","update.php?time="+value,true);  
+			xmlhttp.send();
+		}
+	
+}
+
+
+
+
+</script>
+<style>
+.Holder{ text-align: center; }
+</style>
+
+<body>
+<div id="results" class="Holder">
+	
+	<div >
+	<input type="text" size="60" id="searchStr" placeholder="Enter Customer ID" required>
+	<button type="button" class="btn btn-success" onclick="searchBook('searchStr');">Ride Search</button>
+	</div>
+	
+	
+</div>
+</body>
+</html>
+
+
